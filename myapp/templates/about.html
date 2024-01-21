@@ -2,9 +2,11 @@
     {% extends 'layouts/base.html' %}
     {% csrf_token %}
     {% block content %}
-    <h1>About</h1>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam. Qui, quaerat.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ipsum repellendus cumque sint, ipsam doloribus nisi hic facere voluptatem cupiditate placeat, deleniti consequatur! Reprehenderit quas deleniti aperiam ex nam laboriosam!</p>
+    <section class="card card-body">
+        <h1>About</h1>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam. Qui, quaerat.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ipsum repellendus cumque sint, ipsam doloribus nisi hic facere voluptatem cupiditate placeat, deleniti consequatur! Reprehenderit quas deleniti aperiam ex nam laboriosam!</p>
 
-    <p>Created by <b>{{username}}</b> </p>
+        <p>Created by <b>{{username}}</b> </p>
+    </section>    
     {% endblock %}

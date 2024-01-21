@@ -2,33 +2,40 @@
     {% extends 'layouts/base.html' %}
     {% block content %}
 
-    <h1>Tasks</h1>
+    <h1>Tasks Pending</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam ratione ut reiciendis amet explicabo sunt quod illo quas quis ad, unde obcaecati sequi nesciunt harum, libero inventore quaerat autem molestias. Quam error molestiae eaque aut?</p>
     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda voluptatum soluta iste doloribus expedita tempore. Corporis iste ut nam at, ad facere non adipisci dolorum architecto harum quis temporibus enim, dignissimos illum nobis necessitatibus deleniti?</p>
 
 
     {# Todo: continue learning #}
     <!--Comentario visible-->
-    {% for task in tasks %}
-        <article>
-            <a href="{% url 'task_detail' task.id %}">
-                {% if task.important %}
-                <strong>{{task.title}}  </strong>
-                {% else %}
-                <h4>{{task.title}}  </h4>
-                {% endif %}
-                {% if task.done == False %}
-                    <p>⏱ Tarea pendiente  </p>
-                {% else %}
-                    <p>✅ Tarea realizada  </p>
-                {% endif %}
-                <p>{{task.description}} </p>
-                <p>{{task.user.username}} </p>
-                <p>{{task.proyect.name}}</p>
-                <button>❌ Delete</button>
-                <button>✅ Done</button>
-            </a>
-        </article>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="text-center display-3 py-5">Taks Pending</h1>
+                {% for task in tasks %}        
+                <a class="list-group-item" href="{% url 'task_detail' task.id %}">                    
+                    <header class="d-flex justify-content-between">
+                        {% if task.important %}
+                        <h1 class="fw-bold text-success">{{task.title}}  </h1>
+                        {% else %}
+                        <h2 class="fw-bold">{{task.title}}  </h2>
+                        {% endif %}
+                        {% if task.done == False %}
+                            <p>⏱ Tarea pendiente  </p>
+                        {% else %}
+                            <p>✅ Tarea realizada  </p>
+                        {% endif %}
+                        <p>{{task.description}} </p>
+                        <p>{{task.user.username}} </p>
+                        <p>{{task.proyect.name}}</p>  
+                        <p>{{task.datecompleted|date:'M j Y:i'}} </p>                              
+                    </header>
+                </a>
+                
     
     {% endfor %}
+            </div>
+        </div>
+    </main>
     {% endblock %}

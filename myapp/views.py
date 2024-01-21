@@ -8,6 +8,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -43,13 +46,13 @@ def other(request):
     proyectos = list(Proyect.objects.values())
     return JsonResponse(proyectos, safe=False)"""
 
-
+@login_required
 def proyects(request):
     proyects = list(Proyect.objects.values())
     return render(request, "proyects/proyects.html",
                   {"proyects": proyects})
 
-
+@login_required
 def tasks(request):
     #tasks = Task.objects.all() muestra todas las tareas sin filtrar
     #muestra por usuario y si datecompleted no es nulo
@@ -66,6 +69,7 @@ def create_task(request):
             title=request.POST['title'], description=request.POST['description'], proyect_id=2)
         return redirect('tasks')"""
 
+@login_required
 def create_task(request):
     if request.method == 'GET':        
         return render(request, 'tasks/create_task.html', {'form': TaskForm})
@@ -78,7 +82,8 @@ def create_task(request):
         return redirect('tasks')
     except:
         return render(request, 'tasks/create_task.html', {'form': TaskForm, 'error': 'Please provide valid data'})        
-    
+
+@login_required    
 def create_proyect(request):
     if request.method == 'GET':
         return render(request, 'proyects/create_proyect.html', {'form': CreateNewProyect()})
@@ -88,7 +93,7 @@ def create_proyect(request):
             name=request.POST['name'])
         return redirect('proyects')
 
-
+@login_required
 def proyect_detail(request, id):
     proyect = get_object_or_404(Proyect, id=id)
     tasks = Task.objects.filter(proyect_id=id)
@@ -98,17 +103,42 @@ def proyect_detail(request, id):
         'tasks': tasks
     })
 
+@login_required
 def task_detail(request, task_id):
-    if request.method == 'GET':
-        task = get_object_or_404(Task, pk=task_id)
+    task = get_object_or_404(Task,pk=task_id, user = request.user)
+    if request.method == 'GET':        
+        
         form = TaskForm(instance=task)
         return render(request, 'tasks/detail.html', {'task':task, 'form': form})
     else:
-        task = get_object_or_404(Task,pk=task_id)
-        form = TaskForm(request.POST, instance=task)
-        form.save()
-        return redirect('tasks')
-        
+        try:        
+            
+            form = TaskForm(request.POST, instance=task)
+            form.save()
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'tasks/detail.html', {'task':task, 'form': form, 'error': 'Error Updating Task'})
+
+@login_required
+def tasks_completed(request):
+    tasks = Task.objects.filter(user=request.user, datecompleted__insnull=False).order_by('-datecompleted')
+    return render(request, "tasks.html",
+                  {"tasks": tasks})
+
+@login_required    
+def complete_task(request,task_id):
+    task = get_object_or_404(Task, pk = task_id)
+    if request.method == 'POST':
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect('task')
+
+@login_required    
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk = task_id)
+    if request.method == 'POST':        
+        task.delete()
+        return redirect('task')
 
 def signup(request):
     if request.method == 'GET':
@@ -132,6 +162,7 @@ def signup(request):
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def signout(request):
     logout(request)
     return redirect('index')
