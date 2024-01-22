@@ -56,7 +56,7 @@ def proyects(request):
 def tasks(request):
     #tasks = Task.objects.all() muestra todas las tareas sin filtrar
     #muestra por usuario y si datecompleted no es nulo
-    tasks = Task.objects.filter(user=request.user)
+    tasks = Task.objects.filter(user=request.user,  datecompleted__isnull=False)
     return render(request, "tasks/tasks.html",
                   {"tasks": tasks})
 
@@ -81,7 +81,7 @@ def create_task(request):
         new_task.save()
         return redirect('tasks')
     except:
-        return render(request, 'tasks/create_task.html', {'form': TaskForm, 'error': 'Please provide valid data'})        
+        return render(request, 'tasks/create_task.html', {'form': TaskForm, 'error': '<Error creating task!>'})        
 
 @login_required    
 def create_proyect(request):
@@ -121,13 +121,13 @@ def task_detail(request, task_id):
 
 @login_required
 def tasks_completed(request):
-    tasks = Task.objects.filter(user=request.user, datecompleted__insnull=False).order_by('-datecompleted')
-    return render(request, "tasks.html",
-                  {"tasks": tasks})
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False)#.order_by('-datecompleted')
+    return render(request, 'tasks/tasks.html',
+                  {'tasks': tasks})
 
 @login_required    
 def complete_task(request,task_id):
-    task = get_object_or_404(Task, pk = task_id)
+    task = get_object_or_404(Task, pk = task_id, user=request.user)
     if request.method == 'POST':
         task.datecompleted = timezone.now()
         task.save()
@@ -135,7 +135,7 @@ def complete_task(request,task_id):
 
 @login_required    
 def delete_task(request, task_id):
-    task = get_object_or_404(Task, pk = task_id)
+    task = get_object_or_404(Task, pk = task_id, user=request.user)
     if request.method == 'POST':        
         task.delete()
         return redirect('task')
@@ -153,10 +153,10 @@ def signup(request):
             except IntegrityError:
                 return render(request, 'signup.html', 
                               {'form': UserCreationForm, 
-                               'error': 'Username already exists'})
+                               'error': 'Username already exists!'})
         return render(request, 'signup.html', 
                       {'form': UserCreationForm, 
-                        'error': 'Passwords do not match'})
+                        'error': 'Passwords do not match!'})
 
 
 def home(request):

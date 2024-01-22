@@ -1,14 +1,23 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
+<main class="container">
     <h1>Proyect Detail</h1>
-    <h2> {{proyect}} </h2>
-    
-    {% for task in tasks %}
-        <div class="card">
-            <h3>{{task.title}} </h3>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis repudiandae doloremque quisquam voluptatem commodi necessitatibus maxime similique eum qui obcaecati.</p>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+           
+            <div class="mt-5 d-flex"></div>
+                <h2> {{proyect}} </h2>
+                
+                {% for task in tasks %}
+                    <div class="card">
+                        <h3>{{task.title}} </h3>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    {% endfor %}
-        
+    </div>
+</main>        
 {% endblock  %}
     

@@ -5,14 +5,30 @@
 {% block content %}
 <section class="card card-body">
     <h1 class="display-1 text-center">{{title}} </h1>
-    <img src="{%  static 'logo_python.png' %}" alt="imagen logo_python" width="70">
-    <img src="{%  static 'django_logo.png' %}" alt="imagen logo_python" width="70">
-    <img src="{%  static 'fazt_logo.png' %}" alt="imagen logo_python" width="70">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus sapiente impedit, beatae cupiditate quia pariatur laborum eum soluta! Reiciendis, molestiae. Accusantium eveniet est culpa, perspiciatis iustino molestias? Architecinto, accusantium eaque!</p>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur iste reiciendis neque odio numquam quidem deleniti eum alias labore omnis saepe sit ex repudiandae cum, nam fuga beatae totam volup</p>
+    <div class="container text-center " >
+        <img src="{%  static 'logo_python.png' %}" alt="imagen logo_python" width="70">
+        <img src="{%  static 'django_logo.png' %}" alt="imagen logo_python" width="70">
+        <img src="{%  static 'fazt_logo.png' %}" alt="imagen logo_python" width="70">
+    </div>
+    
+    <p>¡Hola! Me alegra mucho que hayas decidido visitar mi página web. Espero que encuentres lo que buscas y que disfrutes del contenido. Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto conmigo. Estare aquí para ayudarte en todo lo que necesites. ¡Gracias por la visita! 😊</p>
+    <p>Quiero que sepas que todo el contenido de nuestro sitio web fue creado utilizando <b>Python/Django y Bootstrap</b>. Además, me gustaría mencionar que nuestro sitio web fue desarrollado siguiendo el tutorial de Django CRUD presentado por Fazt.</p>
+
     <div class="text-center">
         <a class="btn btn-primary" href="/signin/">Signin</a>
         <a class="btn btn-secondary" href="/signup/">SignUp</a>
     </div>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="..." class="rounded me-2" alt="...">
+          <strong class="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
 </section>
 {% endblock %}

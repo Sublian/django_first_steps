@@ -1,17 +1,23 @@
 
     {% extends 'layouts/base.html' %}
     {% block content %}
+    <main class="conteiner">
+        <h1>Proyects</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita nobis illo eos. Sit ab optio animi porro, commodi rem ullam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, error dolorum explicabo repudiandae blanditiis eius laboriosam facilis atque praesentium incidunt.</p>
 
-    <h1>Proyects</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita nobis illo eos. Sit ab optio animi porro, commodi rem ullam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, error dolorum explicabo repudiandae blanditiis eius laboriosam facilis atque praesentium incidunt.</p>
-
-    {% for proyect in proyects %}
-        <article class="card">
-            <a href="{% url 'proyects_detail' proyect.id %} ">
-            <h3>{{proyect.name}}  </h3>
-            </a>
-        </article>
-    
-    {% endfor %}
+        <div class="row">
+            <div class="col-md-4 offset-md-4 mt-5">
+                
+                {% for proyect in proyects %}
+                    <article class="card">
+                        <a href="{% url 'proyects_detail' proyect.id %} ">
+                        <h3>{{proyect.name}}  </h3>
+                        </a>
+                    </article>
+                
+                {% endfor %}
+            </div>
+        </div>
+    </main>
     {% endblock %}
